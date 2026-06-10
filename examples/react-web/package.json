@@ -1,0 +1,22 @@
+{
+  "name": "faro-react-signals-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 5173"
+  },
+  "dependencies": {
+    "@grafana/faro-web-sdk": "^1.10.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "faro-react-signals": "workspace:*",
+    "vite": "^6.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
