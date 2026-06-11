@@ -48,7 +48,6 @@ This is the recommended path for teams with a design system: instrument the shar
 | `FaroEventSignal` | `faro.api.pushEvent` |
 | `FaroErrorSignal` | `faro.api.pushError` or `faro.api.pushLog` |
 | `FaroMeasurementSignal` | `faro.api.pushMeasurement` |
-| `FaroSignalInteraction` | `pushEvent`, `pushMeasurement`, optional `pushLog` |
 
 ## Install
 
@@ -118,40 +117,26 @@ import { FaroErrorSignal, FaroEventSignal, FaroMeasurementSignal } from 'faro-re
 
 `FaroErrorSignal` defaults to `pushError` for real `Error` objects and `pushLog` for non-`Error` values.
 
-## Interaction boundary
+## Manual user-action wiring
 
 ```tsx
-import { FaroClickSignal, FaroErrorSignal, FaroSignalInteraction } from 'faro-react-signals';
+import { useFaroUserAction } from 'faro-react-signals';
 
-<FaroSignalInteraction name="checkout.submit" routeTemplate="/checkout">
-  <FaroClickSignal name="clicked">
-    <button type="button" onClick={submitCheckout}>
+function SubmitButton() {
+  const submit = useFaroUserAction({
+    name: 'checkout.submit',
+    faroContext: { paymentMethod: 'card' },
+  });
+
+  return (
+    <button type="button" {...submit.dataAttributes} onClick={submit.wrap(submitCheckout)}>
       Submit
     </button>
-  </FaroClickSignal>
-
-  <FaroErrorSignal name="payment_failed" error={error} when={failed} />
-</FaroSignalInteraction>;
+  );
+}
 ```
 
-The boundary provides inherited `interactionName`, `interactionId`, `routeTemplate`, and `flow` attributes. It emits start, end, and duration signals by default.
-
-## Async workflow hook
-
-```tsx
-import { useFaroSignalInteraction } from 'faro-react-signals';
-
-const checkout = useFaroSignalInteraction('checkout.submit', {
-  routeTemplate: '/checkout',
-});
-
-checkout.event('clicked', { paymentMethod: 'card' });
-checkout.measurement('client_validation.duration', 120, { unit: 'ms' });
-checkout.error('payment_failed', error);
-checkout.end();
-```
-
-Local signal names are prefixed with the interaction name, so `clicked` becomes `checkout.submit.clicked`.
+Use `useFaroUserAction` when a component cannot be safely wrapped with `FaroUserAction` or `withFaroUserAction`.
 
 ## Testing with a mocked Faro API
 
