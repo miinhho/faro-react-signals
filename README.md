@@ -4,6 +4,17 @@ Declarative React helpers for Grafana Faro.
 
 This package does not replace `@grafana/faro-react`. Faro's React package owns router instrumentation, error boundaries, profiling, SSR support, and the Faro runtime. `faro-react-signals` adds a JSX, hook, and design-system adapter layer for app-authored user actions and custom signals.
 
+
+## Install
+
+```sh
+npm install faro-react-signals
+
+pnpm add faro-react-signals
+
+yarn add faro-react-signals
+```
+
 ## User actions first
 
 ```tsx
@@ -48,12 +59,6 @@ This is the recommended path for teams with a design system: instrument the shar
 | `FaroEventSignal` | `faro.api.pushEvent` |
 | `FaroErrorSignal` | `faro.api.pushError` or `faro.api.pushLog` |
 | `FaroMeasurementSignal` | `faro.api.pushMeasurement` |
-
-## Install
-
-```sh
-pnpm add faro-react-signals @grafana/faro-web-sdk react
-```
 
 ## Context attributes
 
