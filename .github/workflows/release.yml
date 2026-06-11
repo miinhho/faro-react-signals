@@ -12,6 +12,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
 
     steps:
       - uses: actions/checkout@v6
@@ -31,4 +33,4 @@ jobs:
 
       - run: pnpm build
 
-      - run: pnpm publish --provenance --access public --no-git-checks
+      - run: npm publish --access public
